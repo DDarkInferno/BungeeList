@@ -1,0 +1,52 @@
+ranks:
+  owner:
+    permission: 'bungeelist.owner'
+    format: '&8[&2Owner&8]&r'
+  developer:
+    permission: 'bungeelist.developer'
+    format: '&8[&6Developer&8]&r'
+  moderator:
+    permission: 'bungeelist.moderator'
+    format: '&8[&3Moderator&8]&r'
+  helper:
+    permission: 'stafflist.helper'
+    format: '&8[&eHelper&8]&r'
+
+groups:
+  arenas:
+    - 'Arena1'
+    - 'Arena2'
+    - 'Arena3'
+  lobbies:
+    - 'lobby1'
+    - 'lobby2'
+    - 'lobby3'
+
+blacklist:
+  - 'builder'
+
+formats:
+  header: "&6&m---------&e&l Staff Online &6&m---------"
+  # %name% returns the name of the server or group.
+  # %rank% returns the player's rank format.
+  # %player% returns the player's name.
+
+  # The title of the group or server
+  title: "  &e&l%name%\n"
+  # The format for players in a server without a group
+  server: "    %rank% &f%player%\n"
+  # The format for players in a server in a group
+  group: "    %rank% &f %player% &e(%name%)\n"
+  # Set to "" if you don't want a divider between groups/servers
+  divider: "\n"
+
+messages:
+  no-staff: '&c&lOh no! &cThere are no staff members online'
+  invalid-argument: '&cThis command is not available you can use &l/staff (vanish)'
+  no-console: '&cOnly players can use this command'
+  no-permission: '&cYou do not have permission to use this command.'
+  vanish:
+    enabled: '&aYou will no longer be listed on the staff list'
+    disabled: '&aYou can now be seen on the staff list'
+
+

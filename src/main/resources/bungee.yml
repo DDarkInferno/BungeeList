@@ -1,0 +1,14 @@
+name: BungeeList
+version: ${project.version}
+main: co.ignitus.bungeelist.BungeeList
+description: Check online staff members.
+author: "Ignitus Co"
+
+commands:
+  staff:
+    description: Shows online staff, their ranks and what server they're on.
+    aliases: [onlinestaff]
+
+permissions:
+  bungeelist.vanish:
+    description: Allows staff members to hide themselves from the list.
