@@ -20,7 +20,7 @@ public final class BungeeList extends Plugin {
         instance = this;
         cs.sendMessage(new TextComponent(ChatColor.GREEN + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
         cs.sendMessage(new TextComponent(ChatColor.GREEN + "  Enabling BungeeList"));
-        cs.sendMessage(new TextComponent(ChatColor.GREEN + "Plugin Author: Ignitus Co."));
+        cs.sendMessage(new TextComponent(ChatColor.GREEN + "Developed by Ignitus Co."));
         cs.sendMessage(new TextComponent(ChatColor.GREEN + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
         configFile = new ConfigFile();
         getProxy().getPluginManager().registerCommand(this, new StaffCMD());
@@ -30,7 +30,7 @@ public final class BungeeList extends Plugin {
     public void onDisable() {
         cs.sendMessage(new TextComponent(ChatColor.RED + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
         cs.sendMessage(new TextComponent(ChatColor.RED + "  Disabling BungeeList"));
-        cs.sendMessage(new TextComponent(ChatColor.RED + "Plugin Author: Ignitus Co."));
+        cs.sendMessage(new TextComponent(ChatColor.RED + "Developed by Ignitus Co."));
         cs.sendMessage(new TextComponent(ChatColor.RED + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
     }
 

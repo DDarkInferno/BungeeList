@@ -12,6 +12,6 @@ public class MessageUtil {
     }
 
     public static TextComponent getMessage(String path) {
-        return format(BungeeList.getInstance().getConfigFile().getConfiguration().getString("messages." + path));
+        return format(BungeeList.getInstance().getConfigFile().getConfiguration().getString("messages." + path, "&cUnknown Message. Please update your config."));
     }
 }

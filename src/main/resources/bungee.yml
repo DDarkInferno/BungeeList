@@ -12,3 +12,5 @@ commands:
 permissions:
   bungeelist.vanish:
     description: Allows staff members to hide themselves from the list.
+  bungeelist.reload:
+    description: Grants permission to reload the config file.

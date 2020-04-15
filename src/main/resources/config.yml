@@ -1,4 +1,5 @@
 ranks:
+  # If a player has multiple permission, whichever rank is listed first here is shown.
   owner:
     permission: 'bungeelist.owner'
     format: '&8[&2Owner&8]&r'
@@ -23,7 +24,7 @@ groups:
     - 'lobby3'
 
 blacklist:
-  - 'builder'
+  - 'secretserver'
 
 formats:
   header: "&6&m---------&e&l Staff Online &6&m---------"
@@ -32,7 +33,10 @@ formats:
   # %player% returns the player's name.
 
   # The title of the group or server
-  title: "  &e&l%name%\n"
+  # %total_online% - Total amount of players online
+  # %total_online_staff% - Total amount of staff online
+  # %total_online_group% - Total amount of staff online in a group/server
+  title: "  &e&l%name% (%total_online_group%/%total_online_staff%)\n"
   # The format for players in a server without a group
   server: "    %rank% &f%player%\n"
   # The format for players in a server in a group
@@ -42,9 +46,10 @@ formats:
 
 messages:
   no-staff: '&c&lOh no! &cThere are no staff members online'
-  invalid-argument: '&cThis command is not available you can use &l/staff (vanish)'
+  invalid-argument: '&cThis command is not available you can use &l/staff (vanish/reload)'
   no-console: '&cOnly players can use this command'
   no-permission: '&cYou do not have permission to use this command.'
+  reload: '&aSuccessfully reloaded the config file.'
   vanish:
     enabled: '&aYou will no longer be listed on the staff list'
     disabled: '&aYou can now be seen on the staff list'
