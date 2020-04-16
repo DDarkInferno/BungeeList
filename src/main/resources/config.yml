@@ -10,7 +10,7 @@ ranks:
     permission: 'bungeelist.moderator'
     format: '&8[&3Moderator&8]&r'
   helper:
-    permission: 'stafflist.helper'
+    permission: 'bungeelist.helper'
     format: '&8[&eHelper&8]&r'
 
 groups:
@@ -53,5 +53,3 @@ messages:
   vanish:
     enabled: '&aYou will no longer be listed on the staff list'
     disabled: '&aYou can now be seen on the staff list'
-
-

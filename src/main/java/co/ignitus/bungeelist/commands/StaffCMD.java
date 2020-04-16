@@ -33,23 +33,23 @@ public class StaffCMD extends Command {
             String groupFormat = config.getString("formats.group");
             int playerIndex;
             if (sender instanceof ProxiedPlayer) {
-                String rank = getRank((ProxiedPlayer) sender, config);
-                playerIndex = getRankIndex(rank, config);
+                String rank = getRank((ProxiedPlayer) sender);
+                playerIndex = getRankIndex(rank);
             } else {
                 playerIndex = Integer.MAX_VALUE;
             }
             AtomicInteger onlineStaff = new AtomicInteger(0);
             ProxyServer.getInstance().getPlayers().stream()
-                    .sorted(Comparator.comparingInt(player -> getRankIndex(getRank((ProxiedPlayer) player, config), config)).reversed())
+                    .sorted(Comparator.comparingInt(player -> getRankIndex(getRank((ProxiedPlayer) player))))
                     .forEach(player -> {
                         String serverName = player.getServer().getInfo().getName();
                         if (config.getStringList("blacklist").stream().anyMatch(server -> server.equalsIgnoreCase(serverName)))
                             return;
-                        String rankName = getRank(player, config);
+                        String rankName = getRank(player);
                         if (rankName == null)
                             return;
-                        int rankIndex = getRankIndex(rankName, config);
-                        if (hiddenStaff.contains(player.getUniqueId()) && rankIndex > playerIndex)
+                        int rankIndex = getRankIndex(rankName);
+                        if (hiddenStaff.contains(player.getUniqueId()) && rankIndex < playerIndex)
                             return;
                         String rankFormat = config.getString("ranks." + rankName + ".format");
                         String playerName = player.getName();
@@ -88,10 +88,10 @@ public class StaffCMD extends Command {
                 int players;
                 if (config.contains("groups." + name)) {
                     players = config.getStringList("groups." + name).stream()
-                            .mapToInt(this::getServerPlayers)
+                            .mapToInt(this::getStaffOnline)
                             .sum();
                 } else {
-                    players = getServerPlayers(name);
+                    players = getStaffOnline(name);
                 }
                 message.append(titleFormat
                         .replace("%name%", name)
@@ -138,22 +138,26 @@ public class StaffCMD extends Command {
         sender.sendMessage(MessageUtil.getMessage("invalid-argument"));
     }
 
-    private String getRank(ProxiedPlayer player, Configuration config) {
+    private String getRank(ProxiedPlayer player) {
+        final Configuration config = configFile.getConfiguration();
         return config.getSection("ranks").getKeys()
                 .stream()
                 .filter(rank -> player.hasPermission(config.getString("ranks." + rank + ".permission")))
                 .findFirst().orElse(null);
     }
 
-    private int getRankIndex(String rank, Configuration config) {
-        return new LinkedList<>(config.getSection("ranks").getKeys()).indexOf(rank);
+    private int getRankIndex(String rank) {
+        final Configuration config = configFile.getConfiguration();
+        int index = new LinkedList<>(config.getSection("ranks").getKeys()).indexOf(rank);
+        return index < 0 ? 999 : index;
     }
 
-    private int getServerPlayers(String name) {
+    private int getStaffOnline(String name) {
         ServerInfo serverInfo = ProxyServer.getInstance().getServers().values().stream()
                 .filter(server -> server.getName().equalsIgnoreCase(name))
                 .findFirst().orElse(null);
-        return serverInfo != null ? serverInfo.getPlayers().size() : 0;
+        return serverInfo != null ? (int) serverInfo.getPlayers().stream()
+                .filter(player -> getRank(player) != null).count() : 0;
     }
 
 }
