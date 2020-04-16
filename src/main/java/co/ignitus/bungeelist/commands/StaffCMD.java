@@ -7,6 +7,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.config.Configuration;
 
@@ -40,10 +41,14 @@ public class StaffCMD extends Command {
             }
             AtomicInteger onlineStaff = new AtomicInteger(0);
             ProxyServer.getInstance().getPlayers().stream()
+                    .filter(Objects::nonNull)
                     .sorted(Comparator.comparingInt(player -> getRankIndex(getRank((ProxiedPlayer) player))))
                     .forEach(player -> {
-                        String serverName = player.getServer().getInfo().getName();
-                        if (config.getStringList("blacklist").stream().anyMatch(server -> server.equalsIgnoreCase(serverName)))
+                        Server server = player.getServer();
+                        if (server == null || server.getInfo() == null)
+                            return;
+                        String serverName = server.getInfo().getName();
+                        if (config.getStringList("blacklist").stream().anyMatch(blacklistServer -> blacklistServer.equalsIgnoreCase(serverName)))
                             return;
                         String rankName = getRank(player);
                         if (rankName == null)
@@ -54,7 +59,7 @@ public class StaffCMD extends Command {
                         String rankFormat = config.getString("ranks." + rankName + ".format");
                         String playerName = player.getName();
                         String serverGroup = config.getSection("groups").getKeys().stream()
-                                .filter(group -> config.getStringList("groups." + group).stream().anyMatch(server -> server.equalsIgnoreCase(serverName)))
+                                .filter(group -> config.getStringList("groups." + group).stream().anyMatch(groupServer -> groupServer.equalsIgnoreCase(serverName)))
                                 .findFirst().orElse(null);
                         onlineStaff.incrementAndGet();
                         if (serverGroup != null) {
