@@ -23,7 +23,7 @@ public final class BungeeList extends Plugin {
         cs.sendMessage(new TextComponent(ChatColor.GREEN + "Developed by Ignitus Co."));
         cs.sendMessage(new TextComponent(ChatColor.GREEN + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
         configFile = new ConfigFile();
-        getProxy().getPluginManager().registerCommand(this, new StaffCMD());
+        getProxy().getPluginManager().registerCommand(this, new StaffCMD(configFile.getConfiguration()));
     }
 
     @Override

@@ -26,8 +26,16 @@ groups:
 blacklist:
   - 'secretserver'
 
+command:
+  permission: 'bungeelist.staff'
+  aliases:
+    - glist
+    - list
+    - onlinestaff
+
 formats:
   header: "&6&m---------&e&l Staff Online &6&m---------"
+  footer: "&6&m-----------------------------------"
   # %name% returns the name of the server or group.
   # %rank% returns the player's rank format.
   # %player% returns the player's name.

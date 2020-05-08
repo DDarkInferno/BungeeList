@@ -19,8 +19,11 @@ public class StaffCMD extends Command {
     final private BungeeList bungeeList = BungeeList.getInstance();
     final private ConfigFile configFile = bungeeList.getConfigFile();
 
-    public StaffCMD() {
-        super("staff");
+    public StaffCMD(Configuration config) {
+        super("staff",
+                config.getString("command.permission", ""),
+                config.getStringList("command.aliases").toArray(new String[0])
+        );
     }
 
     private static List<UUID> hiddenStaff = new ArrayList<>();
@@ -106,6 +109,7 @@ public class StaffCMD extends Command {
                 message.append(builder.toString());
                 message.append(divider);
             });
+            message.append(config.getString("formats.footer", ""));
             sender.sendMessage(MessageUtil.format(message.toString()));
             return;
         }
