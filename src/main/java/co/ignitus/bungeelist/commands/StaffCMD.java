@@ -75,6 +75,7 @@ public class StaffCMD extends Command {
                             builder.append(groupFormat
                                     .replace("%rank%", rankFormat)
                                     .replace("%player%", playerName)
+                                    .replace("%displayname%", player.getDisplayname())
                                     .replace("%name%", serverName));
                             result.put(serverGroup, builder);
                             return;
@@ -84,6 +85,7 @@ public class StaffCMD extends Command {
                             builder = new StringBuilder();
                         builder.append(serverFormat
                                 .replace("%rank%", rankFormat)
+                                .replace("%displayname%", player.getDisplayname())
                                 .replace("%player%", playerName));
                         result.put(serverName, builder);
                     });
