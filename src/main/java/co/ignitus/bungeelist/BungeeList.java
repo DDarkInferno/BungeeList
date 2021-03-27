@@ -2,6 +2,7 @@ package co.ignitus.bungeelist;
 
 import co.ignitus.bungeelist.commands.StaffCMD;
 import co.ignitus.bungeelist.files.ConfigFile;
+import co.ignitus.bungeelist.util.HookUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -23,6 +24,12 @@ public final class BungeeList extends Plugin {
         cs.sendMessage(new TextComponent(ChatColor.GREEN + "Developed by Ignitus Co."));
         cs.sendMessage(new TextComponent(ChatColor.GREEN + ChatColor.STRIKETHROUGH.toString() + "---------------------------"));
         configFile = new ConfigFile();
+
+        if (getProxy().getPluginManager().getPlugin("PremiumVanish") != null) {
+            cs.sendMessage(new TextComponent(ChatColor.GREEN + "[BungeeList] PremiumVanish found. Hooking into..."));
+            HookUtil.setPremiumVanish(true);
+        }
+
         getProxy().getPluginManager().registerCommand(this, new StaffCMD(configFile.getConfiguration()));
     }
 

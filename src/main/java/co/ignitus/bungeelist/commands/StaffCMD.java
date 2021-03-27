@@ -2,7 +2,9 @@ package co.ignitus.bungeelist.commands;
 
 import co.ignitus.bungeelist.BungeeList;
 import co.ignitus.bungeelist.files.ConfigFile;
+import co.ignitus.bungeelist.util.HookUtil;
 import co.ignitus.bungeelist.util.MessageUtil;
+import de.myzelyam.api.vanish.BungeeVanishAPI;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
@@ -42,6 +44,7 @@ public class StaffCMD extends Command {
             } else {
                 playerIndex = Integer.MAX_VALUE;
             }
+
             AtomicInteger onlineStaff = new AtomicInteger(0);
             ProxyServer.getInstance().getPlayers().stream()
                     .filter(Objects::nonNull)
@@ -57,7 +60,7 @@ public class StaffCMD extends Command {
                         if (rankName == null)
                             return;
                         int rankIndex = getRankIndex(rankName);
-                        if (hiddenStaff.contains(player.getUniqueId()) && rankIndex < playerIndex)
+                        if (isVanished(player) && rankIndex < playerIndex)
                             return;
                         String rankFormat = config.getString("ranks." + rankName + ".format");
                         String playerName = player.getName();
@@ -167,6 +170,14 @@ public class StaffCMD extends Command {
                 .findFirst().orElse(null);
         return serverInfo != null ? (int) serverInfo.getPlayers().stream()
                 .filter(player -> getRank(player) != null).count() : 0;
+    }
+
+    private boolean isVanished(ProxiedPlayer player) {
+        if (hiddenStaff.contains(player.getUniqueId()))
+            return true;
+        if (!HookUtil.premiumVanishEnabled())
+            return false;
+        return BungeeVanishAPI.isInvisible(player);
     }
 
 }

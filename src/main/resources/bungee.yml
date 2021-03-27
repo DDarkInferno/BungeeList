@@ -4,6 +4,8 @@ main: co.ignitus.bungeelist.BungeeList
 description: Check online staff members.
 author: "Ignitus Co"
 
+softdepends: [PremiumVanish]
+
 commands:
   staff:
     description: Shows online staff, their ranks and what server they're on.
